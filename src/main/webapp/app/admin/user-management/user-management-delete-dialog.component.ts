@@ -1,63 +1,77 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { User, UserService } from 'app/core';
+import {PROGRESS_STATE} from 'app/shared/constants/load.constants';
 
 @Component({
     selector: 'jhi-user-mgmt-delete-dialog',
     templateUrl: './user-management-delete-dialog.component.html'
 })
-export class UserMgmtDeleteDialogComponent {
-    user: User;
+export class UserMgmtDeleteDialogComponent implements OnInit {
 
-    constructor(private userService: UserService, public activeModal: NgbActiveModal, private eventManager: JhiEventManager) {}
+    private item: User;
+    private list: User[];
+    private progressValue: number;
+    private progressState: string;
+    private _opened: any;
 
-    clear() {
-        this.activeModal.dismiss('cancel');
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private userService: UserService,
+        private eventManager: JhiEventManager
+    ) {
     }
-
-    confirmDelete(login) {
-        this.userService.delete(login).subscribe(response => {
-            this.eventManager.broadcast({
-                name: 'userListModification',
-                content: 'Deleted a user'
-            });
-            this.activeModal.dismiss(true);
-        });
-    }
-}
-
-@Component({
-    selector: 'jhi-user-delete-dialog',
-    template: ''
-})
-export class UserDeleteDialogComponent implements OnInit, OnDestroy {
-    private ngbModalRef: NgbModalRef;
-
-    constructor(private route: ActivatedRoute, private router: Router, private modalService: NgbModal) {}
 
     ngOnInit() {
-        this.route.data.subscribe(({ user }) => {
-            setTimeout(() => {
-                this.ngbModalRef = this.modalService.open(UserMgmtDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
-                this.ngbModalRef.componentInstance.user = user.body;
-                this.ngbModalRef.result.then(
-                    result => {
-                        this.router.navigate([{ outlets: { popup: null } }], { replaceUrl: true, queryParamsHandling: 'merge' });
-                        this.ngbModalRef = null;
-                    },
-                    reason => {
-                        this.router.navigate([{ outlets: { popup: null } }], { replaceUrl: true, queryParamsHandling: 'merge' });
-                        this.ngbModalRef = null;
-                    }
-                );
-            }, 0);
+        this.route.data.subscribe(({ response }) => {
+            if (response.body instanceof Array) {
+                this.list = response.body;
+            } else if (response.body instanceof Object) {
+                this.item = response.body;
+            }
+            this.opened = true;
         });
     }
 
-    ngOnDestroy() {
-        this.ngbModalRef = null;
+    get opened() {
+        return this._opened;
+    }
+
+    set opened(value: any) {
+        this._opened = value;
+        if (!value) {
+            this.router.navigate([{ outlets: { popup: null } }], { replaceUrl: true, queryParamsHandling: 'merge' });
+        }
+    }
+
+    confirmBatchDelete() {
+        const loop = () => {
+            this.userService.delete(this.list[this.progressValue].id).subscribe(
+                response => {
+                    if (this.progressValue >= 0 && this.progressValue < this.list.length) {
+                        this.progressValue++;
+                        loop();
+                    } else {
+                        this.progressState = PROGRESS_STATE.SUCCESS;
+                        this.eventManager.broadcast({
+                            name: 'userListModification',
+                            content: 'Deleted an User'
+                        });
+                    }
+                },
+                error => {
+                    this.progressState = PROGRESS_STATE.ERROR;
+                    this.eventManager.broadcast({
+                        name: 'userListModification',
+                        content: 'Deleted an User'
+                    });
+                }
+            );
+        };
+        this.progressState = PROGRESS_STATE.IN_PROGRESS;
+        loop();
     }
 }

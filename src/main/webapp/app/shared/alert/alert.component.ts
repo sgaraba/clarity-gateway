@@ -1,21 +1,36 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { JhiAlertService } from 'ng-jhipster';
+import {ProfileInfo, ProfileService} from 'app/layouts';
 
 @Component({
     selector: 'jhi-alert',
     template: `
-        <div class="alerts" role="alert">
-            <div *ngFor="let alert of alerts" [ngClass]="{\'alert.position\': true, \'toast\': alert.toast}">
-                <ngb-alert *ngIf="alert && alert.type && alert.msg" [type]="alert.type" (close)="alert.close(alerts)">
-                    <pre [innerHTML]="alert.msg"></pre>
-                </ngb-alert>
-            </div>
-        </div>`
+        <clr-alerts>
+            <clr-alert *ngFor="let alert of alerts" [clrAlertType]="alert.type" [clrAlertAppLevel]="true">
+                <div class="alert-item">
+                    <span class="alert-text" [innerHTML]="alert.msg" *ngIf="alert && alert.type && alert.msg"></span>
+                </div>
+            </clr-alert>
+        </clr-alerts>`
 })
 export class JhiAlertComponent implements OnInit, OnDestroy {
     alerts: any[];
+    profileInfo: ProfileInfo;
+    ribbonEnv: string;
 
-    constructor(private alertService: JhiAlertService) {}
+    constructor(private alertService: JhiAlertService, private profileService: ProfileService) {
+        this.profileService.getProfileInfo().then(profileInfo => {
+            this.profileInfo = profileInfo;
+            this.ribbonEnv = profileInfo.ribbonEnv;
+            if (this.ribbonEnv === 'dev') {
+                this.alertService.addAlert({
+                    type: 'warning',
+                    msg: 'global.ribbon.dev',
+                    scoped: false,
+                }, this.alerts);
+            }
+        });
+    }
 
     ngOnInit() {
         this.alerts = this.alertService.get();
@@ -24,4 +39,5 @@ export class JhiAlertComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.alerts = [];
     }
+
 }

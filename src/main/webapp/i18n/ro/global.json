@@ -93,7 +93,7 @@
             "id" : "ID"
         },
         "ribbon": {
-            "dev":"Development"
+            "dev": "Development"
         },
         "item-count": "Se afișează {{first}} - {{second}} din {{total}} elemente."
     },

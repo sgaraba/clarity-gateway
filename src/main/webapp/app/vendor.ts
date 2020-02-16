@@ -45,4 +45,10 @@ fontawesome.library.add(solid.faSearch);
 fontawesome.library.add(solid.faTrashAlt);
 fontawesome.library.add(solid.faAsterisk);
 
+// added for clarity
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/throttleTime';
+import '@clr/angular'
+import '@clr/icons'
+import '@clr/icons/shapes/all-shapes'
 // jhipster-needle-add-element-to-vendor - JHipster will add new menu items here

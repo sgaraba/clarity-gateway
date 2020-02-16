@@ -9,7 +9,6 @@ import {
     adminState,
     AuditResolvePagingParams,
     AuditsComponent,
-    UserDeleteDialogComponent,
     UserMgmtComponent,
     UserMgmtDetailComponent,
     UserMgmtUpdateComponent,
@@ -34,12 +33,11 @@ import {
 @NgModule({
     imports: [
         GatewaySharedModule,
-        RouterModule.forChild(adminState)
+        RouterModule.forChild(adminState),
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
     declarations: [
         AuditsComponent,
-        UserDeleteDialogComponent,
         UserMgmtComponent,
         UserMgmtDetailComponent,
         UserMgmtUpdateComponent,
@@ -52,7 +50,12 @@ import {
         JhiMetricsMonitoringComponent,
         JhiMetricsMonitoringModalComponent
     ],
-    entryComponents: [UserMgmtUpdateComponent, UserMgmtDeleteDialogComponent, JhiHealthModalComponent, JhiMetricsMonitoringModalComponent],
+    entryComponents: [
+        UserMgmtUpdateComponent,
+        UserMgmtDeleteDialogComponent,
+        JhiHealthModalComponent,
+        JhiMetricsMonitoringModalComponent,
+    ],
     providers: [
         AuditResolvePagingParams,
         AuditsService,

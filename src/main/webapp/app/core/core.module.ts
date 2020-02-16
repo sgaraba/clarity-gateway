@@ -7,7 +7,6 @@ import locale from '@angular/common/locales/en';
 import {
     JhiLanguageHelper,
     LoginService,
-    LoginModalService,
     AccountService,
     StateStorageService,
     Principal,
@@ -18,12 +17,13 @@ import {
 } from './';
 
 @NgModule({
-    imports: [HttpClientModule],
+    imports: [
+        HttpClientModule
+    ],
     exports: [],
     declarations: [],
     providers: [
         LoginService,
-        LoginModalService,
         Title,
         {
             provide: LOCALE_ID,

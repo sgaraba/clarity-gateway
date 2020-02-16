@@ -16,4 +16,7 @@ export * from './register/register.service';
 export * from './register/register.route';
 export * from './settings/settings.component';
 export * from './settings/settings.route';
+// added for clarity
+export * from './login/login.component';
+export * from './login/login.route';
 export * from './account.route';

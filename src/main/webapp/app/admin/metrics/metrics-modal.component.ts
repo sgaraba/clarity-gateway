@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-metrics-modal',
     templateUrl: './metrics-modal.component.html'
 })
 export class JhiMetricsMonitoringModalComponent implements OnInit {
+
     threadDumpFilter: any;
     threadDump: any;
     threadDumpAll = 0;
@@ -14,7 +14,7 @@ export class JhiMetricsMonitoringModalComponent implements OnInit {
     threadDumpTimedWaiting = 0;
     threadDumpWaiting = 0;
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor() {}
 
     ngOnInit() {
         this.threadDump.forEach(value => {
@@ -29,7 +29,8 @@ export class JhiMetricsMonitoringModalComponent implements OnInit {
             }
         });
 
-        this.threadDumpAll = this.threadDumpRunnable + this.threadDumpWaiting + this.threadDumpTimedWaiting + this.threadDumpBlocked;
+        this.threadDumpAll = this.threadDumpRunnable + this.threadDumpWaiting +
+            this.threadDumpTimedWaiting + this.threadDumpBlocked;
     }
 
     getBadgeClass(threadState) {

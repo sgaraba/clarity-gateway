@@ -16,11 +16,16 @@ import {
     PasswordResetInitComponent,
     PasswordResetFinishComponent,
     SettingsComponent,
-    accountState
+    accountState,
+    // added for clarity
+    LoginComponent,
 } from './';
 
 @NgModule({
-    imports: [GatewaySharedModule, RouterModule.forChild(accountState)],
+    imports: [
+        GatewaySharedModule,
+        RouterModule.forChild(accountState)
+    ],
     declarations: [
         ActivateComponent,
         RegisterComponent,
@@ -28,9 +33,19 @@ import {
         PasswordStrengthBarComponent,
         PasswordResetInitComponent,
         PasswordResetFinishComponent,
-        SettingsComponent
+        SettingsComponent,
+        // added for clarity
+        LoginComponent,
     ],
-    providers: [Register, ActivateService, PasswordService, PasswordResetInitService, PasswordResetFinishService],
+    providers: [
+        Register,
+        ActivateService,
+        PasswordService,
+        PasswordResetInitService,
+        PasswordResetFinishService,
+        // added for clarity
+        LoginComponent,
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class GatewayAccountModule {}

@@ -2,8 +2,9 @@ import './vendor.ts';
 
 import { NgModule, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Ng2Webstorage, LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import { Ng2Webstorage, LocalStorageService, SessionStorageService  } from 'ngx-webstorage';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
@@ -12,63 +13,82 @@ import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.inter
 import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
 import { GatewaySharedModule } from 'app/shared';
 import { GatewayCoreModule } from 'app/core';
-import { GatewayAppRoutingModule } from './app-routing.module';
+import { GatewayAppRoutingModule} from './app-routing.module';
 import { GatewayHomeModule } from './home/home.module';
 import { GatewayAccountModule } from './account/account.module';
 import { GatewayEntityModule } from './entities/entity.module';
-import { PaginationConfig } from './blocks/config/uib-pagination.config';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import {
     JhiMainComponent,
     NavbarComponent,
-    FooterComponent,
+    SidebarComponent,
     ProfileService,
-    PageRibbonComponent,
     ActiveMenuDirective,
-    ErrorComponent
+    ErrorComponent,
+    PopupComponent,
+    PopupService,
+    PopupDirective
 } from './layouts';
 
 @NgModule({
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         GatewayAppRoutingModule,
-        Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-' }),
+        Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
         GatewaySharedModule,
         GatewayCoreModule,
         GatewayHomeModule,
         GatewayAccountModule,
-        GatewayEntityModule
+        GatewayEntityModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
-    declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+    declarations: [
+        JhiMainComponent,
+        NavbarComponent,
+        SidebarComponent,
+        ActiveMenuDirective,
+        ErrorComponent,
+        PopupComponent,
+        PopupDirective
+],
     providers: [
         ProfileService,
-        PaginationConfig,
+        PopupService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
             multi: true,
-            deps: [LocalStorageService, SessionStorageService]
+            deps: [
+                LocalStorageService,
+                SessionStorageService
+            ]
         },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthExpiredInterceptor,
             multi: true,
-            deps: [Injector]
+            deps: [
+                Injector
+            ]
         },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: ErrorHandlerInterceptor,
             multi: true,
-            deps: [JhiEventManager]
+            deps: [
+                JhiEventManager
+            ]
         },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: NotificationInterceptor,
             multi: true,
-            deps: [Injector]
+            deps: [
+                Injector
+            ]
         }
     ],
-    bootstrap: [JhiMainComponent]
+    bootstrap: [ JhiMainComponent ]
 })
 export class GatewayAppModule {}

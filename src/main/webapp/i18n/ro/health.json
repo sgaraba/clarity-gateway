@@ -20,6 +20,7 @@
             "status": "Stare"
         },
         "status": {
+            "UNKNOWN": "UNKNOWN",
             "UP": "Sus",
             "DOWN": "Jos"
         }

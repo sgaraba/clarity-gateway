@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Vmware Clarity generator",
+        "npmPackageName": "generator-jhipster-vmware-clarity",
+        "description": "A JHipster module that create VMWare Clarity Design UI framework for Angular client.",
+        "hookFor": "entity",
+        "hookType": "post",
+        "generatorCallback": "jhipster-vmware-clarity:entity"
+    }
+]

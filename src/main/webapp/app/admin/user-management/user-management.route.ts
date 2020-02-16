@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate } from '@angular/router';
-import { JhiPaginationUtil } from 'ng-jhipster';
+import {Injectable} from '@angular/core';
+import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate} from '@angular/router';
+import {JhiPaginationUtil} from 'ng-jhipster';
 
-import { Principal, User, UserService } from 'app/core';
-import { UserMgmtComponent } from './user-management.component';
-import { UserMgmtDetailComponent } from './user-management-detail.component';
-import { UserMgmtUpdateComponent } from './user-management-update.component';
-import { UserDeleteDialogComponent } from './user-management-delete-dialog.component';
+import {Principal, User, UserService} from 'app/core';
+import {UserMgmtComponent} from './user-management.component';
+import {UserMgmtDetailComponent} from './user-management-detail.component';
+import {UserMgmtUpdateComponent} from './user-management-update.component';
+import {UserMgmtDeleteDialogComponent} from './user-management-delete-dialog.component';
 
 @Injectable()
 export class UserResolve implements CanActivate {
-    constructor(private principal: Principal) {}
+
+    constructor(private principal: Principal) {
+    }
 
     canActivate() {
         return this.principal.identity().then(account => this.principal.hasAnyAuthority(['ROLE_ADMIN']));
@@ -19,7 +21,9 @@ export class UserResolve implements CanActivate {
 
 @Injectable()
 export class UserResolvePagingParams implements Resolve<any> {
-    constructor(private paginationUtil: JhiPaginationUtil) {}
+
+    constructor(private paginationUtil: JhiPaginationUtil) {
+    }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
@@ -34,7 +38,9 @@ export class UserResolvePagingParams implements Resolve<any> {
 
 @Injectable()
 export class UserMgmtResolve implements Resolve<any> {
-    constructor(private service: UserService) {}
+
+    constructor(private service: UserService) {
+    }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const id = route.params['login'] ? route.params['login'] : null;
@@ -50,7 +56,7 @@ export const userMgmtRoute: Routes = [
         path: 'user-management',
         component: UserMgmtComponent,
         resolve: {
-            pagingParams: UserResolvePagingParams
+            'pagingParams': UserResolvePagingParams
         },
         data: {
             pageTitle: 'userManagement.home.title'
@@ -85,7 +91,7 @@ export const userMgmtRoute: Routes = [
 export const userDialogRoute: Routes = [
     {
         path: 'user-management/:login/delete',
-        component: UserDeleteDialogComponent,
+        component: UserMgmtDeleteDialogComponent,
         resolve: {
             user: UserMgmtResolve
         },

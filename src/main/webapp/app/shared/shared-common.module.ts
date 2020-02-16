@@ -1,11 +1,55 @@
 import { NgModule } from '@angular/core';
 
-import { GatewaySharedLibsModule, FindLanguageFromKeyPipe, JhiAlertComponent, JhiAlertErrorComponent } from './';
+import {
+    GatewaySharedLibsModule,
+    FindLanguageFromKeyPipe,
+    JhiAlertComponent,
+    JhiAlertErrorComponent,
+    JhiStringFilterComponent,
+    JhiNumberFilterComponent,
+    JhiDateFilterComponent,
+    JhiTimeFilterComponent,
+    JhiDateTimeFilterComponent,
+    JhiBooleanFilterComponent,
+    JhiEnumFilterComponent
+} from './';
+/* jhipster-needle-add-entity-filter-import - JHipster will add entity filter here */
+
+const SELECT_FILTER_COMPONENT = [
+    /* jhipster-needle-add-entity-filter - JHipster will add entity filter here */
+];
 
 @NgModule({
-    imports: [GatewaySharedLibsModule],
-    declarations: [FindLanguageFromKeyPipe, JhiAlertComponent, JhiAlertErrorComponent],
+    imports: [
+        GatewaySharedLibsModule,
+    ],
+    declarations: [
+        ...SELECT_FILTER_COMPONENT,
+        FindLanguageFromKeyPipe,
+        JhiAlertComponent,
+        JhiAlertErrorComponent,
+        JhiStringFilterComponent,
+        JhiNumberFilterComponent,
+        JhiDateFilterComponent,
+        JhiTimeFilterComponent,
+        JhiDateTimeFilterComponent,
+        JhiBooleanFilterComponent,
+        JhiEnumFilterComponent
+    ],
     providers: [],
-    exports: [GatewaySharedLibsModule, FindLanguageFromKeyPipe, JhiAlertComponent, JhiAlertErrorComponent]
+    exports: [
+        ...SELECT_FILTER_COMPONENT,
+        GatewaySharedLibsModule,
+        FindLanguageFromKeyPipe,
+        JhiAlertComponent,
+        JhiAlertErrorComponent,
+        JhiStringFilterComponent,
+        JhiNumberFilterComponent,
+        JhiDateFilterComponent,
+        JhiTimeFilterComponent,
+        JhiDateTimeFilterComponent,
+        JhiBooleanFilterComponent,
+        JhiEnumFilterComponent
+    ]
 })
 export class GatewaySharedCommonModule {}

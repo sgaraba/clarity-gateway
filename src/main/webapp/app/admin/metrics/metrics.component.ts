@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { JhiMetricsMonitoringModalComponent } from './metrics-modal.component';
 import { JhiMetricsService } from './metrics.service';
@@ -15,7 +14,9 @@ export class JhiMetricsMonitoringComponent implements OnInit {
     updatingMetrics = true;
     JCACHE_KEY: string;
 
-    constructor(private modalService: NgbModal, private metricsService: JhiMetricsService) {
+    constructor(
+        private metricsService: JhiMetricsService
+    ) {
         this.JCACHE_KEY = 'jcache.statistics';
     }
 
@@ -53,25 +54,11 @@ export class JhiMetricsMonitoringComponent implements OnInit {
         });
     }
 
-    refreshThreadDumpData() {
-        this.metricsService.threadDump().subscribe(data => {
-            const modalRef = this.modalService.open(JhiMetricsMonitoringModalComponent, { size: 'lg' });
-            modalRef.componentInstance.threadDump = data.threads;
-            modalRef.result.then(
-                result => {
-                    // Left blank intentionally, nothing to do here
-                },
-                reason => {
-                    // Left blank intentionally, nothing to do here
-                }
-            );
-        });
-    }
-
     filterNaN(input) {
         if (isNaN(input)) {
             return 0;
         }
         return input;
     }
+
 }
