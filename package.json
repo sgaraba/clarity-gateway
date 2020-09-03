@@ -71,7 +71,7 @@
     "merge-jsons-webpack-plugin": "1.0.14",
     "prettier": "1.11.1",
     "proxy-middleware": "0.15.0",
-    "puppeteer": "1.1.1",
+    "puppeteer": "1.13.0",
     "rimraf": "2.6.1",
     "sourcemap-istanbul-instrumenter-loader": "0.2.0",
     "style-loader": "0.20.3",
